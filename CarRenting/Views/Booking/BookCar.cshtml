@@ -1,0 +1,36 @@
+﻿@model CarRenting.Models.BookingACarVm
+
+@{
+    ViewData["Title"] = "BookCar";
+}
+
+<h2>Bokningen är nu genomförd</h2>
+
+<div>
+    <h4>Bokning</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Booking.BookingTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Booking.BookingTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.CarModel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.CarModel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.PersonNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.PersonNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.BookingId">Edit</a> |*@
+    <a asp-action="Index">Back to add booking</a>
+</div>

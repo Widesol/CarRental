@@ -1,0 +1,60 @@
+﻿@model CarRenting.Models.Entities.Booking
+
+@{
+    ViewData["Title"] = "EndBooking";
+}
+
+<h2>Avsluta bokning</h2>
+
+@*
+    @inject ErrorViewModel alban
+*@
+
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EndBookingStep2">
+            <input type="hidden" asp-for="BookingTime" />
+            <input type="hidden" asp-for="Car" />
+            <input type="hidden" asp-for="Car.CarModel" />
+            <input type="hidden" asp-for="CarId" />
+            <input type="hidden" asp-for="Customer" />
+            <input type="hidden" asp-for="CustomerId" />
+            <input type="hidden" asp-for="BookingId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BookingId" />
+
+            @*@alban.ToString()*@
+
+
+            <div class="form-group">
+                <label asp-for="ReturnTime" class="control-label"></label>
+                <input asp-for="ReturnTime" class="form-control" />
+                <span asp-validation-for="ReturnTime" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="NumberOfRentDays" class="control-label"></label>
+                    <input asp-for="NumberOfRentDays" class="form-control" />
+                    <span asp-validation-for="NumberOfRentDays" class="text-danger"></span>
+                </div>*@
+            <div class="form-group">
+                <label asp-for="Distance" class="control-label"></label>
+                <input asp-for="Distance" class="form-control" />
+                <span asp-validation-for="Distance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

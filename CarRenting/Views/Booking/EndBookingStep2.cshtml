@@ -1,0 +1,63 @@
+﻿@model CarRenting.Models.Entities.Booking
+
+@{
+    ViewData["Title"] = "EndBookingStep2";
+}
+
+<h2></h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Customer.PersonNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Car)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.CarModel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BookingTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.BookingTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ReturnTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ReturnTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberOfRentDays)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberOfRentDays)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Distance)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Distance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.BookingId">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>

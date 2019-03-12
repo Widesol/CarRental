@@ -1,0 +1,61 @@
+﻿@model CarRenting.Models.ViewModels.ViewAllBookingsVm
+
+@{
+    ViewData["Title"] = "AllBookings";
+}
+
+<h2>Alla bokningar</h2>
+
+<button class="btn btn-primary" asp-action="BookingsDependingOnStatus" asp-route-status="1">Pågående bokningar</button>
+<button class="btn btn-primary"asp-action="BookingsDependingOnStatus" asp-route-status="2">Slutförda bokningar</button>
+
+<div>
+    <h4>bokningar</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Booking.BookingId)
+                </th>
+                <th>
+                    <a asp-action="AllBookingsSort" asp-route-sortChoice="1">Bokningstid</a>
+                </th>
+                <th>
+                    <a asp-action="AllBookingsSort" asp-route-sortChoice="2">Bilmodell</a>
+                </th>
+                <th>
+                    <a asp-action="AllBookingsSort" asp-route-sortChoice="3"> Personnummer</a>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Bookings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BookingTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Car.CarModel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Customer.PersonNumber)
+                    </td>
+
+                    <td>
+                        <a class="btn btn-danger" asp-action="EndBooking" asp-route-id="@item.BookingId">End Booking</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.BookingId">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>
