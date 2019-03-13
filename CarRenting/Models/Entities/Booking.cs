@@ -23,15 +23,19 @@ namespace CarRenting.Models.Entities
         {
             get
             {
-                decimal numberOfRentDays = (ReturnTime - BookingTime).Days;
+                decimal numberOfRentDays = (ReturnTime - BookingTime).Days+1;
                 return numberOfRentDays;
             }
         }
+        [Range(0,int.MaxValue, ErrorMessage = "Du kan inte ligga på minus i kilometer, inte ens om du bara backat")]
+        [Display (Name ="Körd distans")]
+
         public decimal Distance { get; set; }
 
         private decimal price=0;
         int baseDayRental = 12;
         int kmPrice = 4;
+        [Display(Name = "Pris")]
         public decimal Price
         {
             get

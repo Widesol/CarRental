@@ -6,9 +6,7 @@
 
 <h2>Avsluta bokning</h2>
 
-@*
-    @inject ErrorViewModel alban
-*@
+
 
 
 
@@ -26,7 +24,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="BookingId" />
 
-            @*@alban.ToString()*@
+            @Html.ValidationSummary()
 
 
             <div class="form-group">
@@ -34,25 +32,20 @@
                 <input asp-for="ReturnTime" class="form-control" />
                 <span asp-validation-for="ReturnTime" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                    <label asp-for="NumberOfRentDays" class="control-label"></label>
-                    <input asp-for="NumberOfRentDays" class="form-control" />
-                    <span asp-validation-for="NumberOfRentDays" class="text-danger"></span>
-                </div>*@
             <div class="form-group">
                 <label asp-for="Distance" class="control-label"></label>
                 <input asp-for="Distance" class="form-control" />
                 <span asp-validation-for="Distance" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Avsluta bokning" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Startsida</a>
 </div>
 
 @section Scripts {

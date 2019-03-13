@@ -45,11 +45,12 @@ namespace CarRenting.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (bookACarVm.Booking.BookingTime < DateTime.Now)
-                {
-                    ModelState.AddModelError("DateError", "Återlämningsdatumet kan inte ligga tidigare än bokningsdatumet"); //Funkar inte som jag tänkt
-                    return View(bookACarVm);
-                }
+                //if (bookACarVm.Car.CarModel!=_dataAccessCarRenting.GetCar(bookACarVm.Car.RegNumber))
+                //{
+                //    ModelState.AddModelError("CarTypeError", "Biltypen på denna bilen är inte samma som kunden önskade");
+                //    return View();
+
+                //}
                 await _dataAccessCarRenting.SaveBooking(bookACarVm);
             return View(bookACarVm);
             }
@@ -75,10 +76,33 @@ namespace CarRenting.Controllers
         public async Task<IActionResult> BookingsDependingOnStatus(int status)
         {
             var allBookingsVm = new ViewAllBookingsVm();
+            allBookingsVm.BookingStatus = status;
             allBookingsVm.Bookings = await _dataAccessCarRenting.GetAllBookingsDependingOnStatus(status);
 
-            return View(allBookingsVm);
+            return View("AllBookings", allBookingsVm);
         }
+
+        public async Task<IActionResult> AllBookingsSortForUnavailible(int sortChoice)
+        {
+            
+            int status = 1;
+            var allBookingsVm = new ViewAllBookingsVm();
+            allBookingsVm.BookingStatus = 1;
+            allBookingsVm.Bookings = await _dataAccessCarRenting.GetAllBookingsSortDependingOnCarStatus(sortChoice, status);
+
+            return View("AllBookings", allBookingsVm);
+        }
+
+        public async Task<IActionResult> AllBookingsSortForAvailible(int sortChoice)
+        {
+            int status = 2;
+            var allBookingsVm = new ViewAllBookingsVm();
+            allBookingsVm.BookingStatus = 2;
+            allBookingsVm.Bookings = await _dataAccessCarRenting.GetAllBookingsSortDependingOnCarStatus(sortChoice, status);
+
+            return View("AllBookings", allBookingsVm);
+        }
+
         public async Task<IActionResult> EndBooking(Guid? id)
         {
             var booking = _dataAccessCarRenting.GetBooking(id);
@@ -91,8 +115,8 @@ namespace CarRenting.Controllers
         {
             if (booking.BookingTime > booking.ReturnTime)
             {
-                ModelState.AddModelError("DateError", "Bokningsdatumet kan inte vara i dåtid"); //Funkar inte som jag tänkt
-                return View(booking);
+                ModelState.AddModelError("DateError", "Returdatumet tidigare än bokningsdatumet går inte"); //Funkar inte som jag tänkt
+                return View("EndBooking", booking);
             }
             await _dataAccessCarRenting.EndBooking(booking);
 

@@ -34,6 +34,7 @@ namespace CarRenting.Data
             }
             else
             {
+              
                 booking.BookingTime= bookACarVm.Booking.BookingTime;
                 booking.Car = tryCar.First();
             }
@@ -50,6 +51,7 @@ namespace CarRenting.Data
             }
 
             _bookingContext.Add(booking);
+
             await _bookingContext.SaveChangesAsync();
             
         }
@@ -72,6 +74,35 @@ namespace CarRenting.Data
             }
         }
 
+        internal async Task<List<Booking>> GetAllBookingsSortDependingOnCarStatus(int sortChoice, int status)
+        {
+            if (status==2)
+            {
+                switch (sortChoice)
+                {
+                    case 1:
+                        return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x=>x.Car.Available==true).OrderBy(x => x.BookingTime).ToListAsync();
+                    case 2:
+                        return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x => x.Car.Available == true).OrderBy(x => x.Car.CarModel).ToListAsync();
+                    default:
+                        return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x => x.Car.Available == true).OrderBy(x => x.Customer.PersonNumber).ToListAsync();
+                }
+            }
+         
+            else
+            {
+                switch (sortChoice)
+                {
+                    case 1:
+                        return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x => x.Car.Available == false).OrderBy(x => x.BookingTime).ToListAsync();
+                    case 2:
+                        return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x => x.Car.Available == false).OrderBy(x => x.Car.CarModel).ToListAsync();
+                    default:
+                        return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x => x.Car.Available == false).OrderBy(x => x.Customer.PersonNumber).ToListAsync();
+                }
+            }
+        }
+
         internal async Task EndBooking(Booking booking)
         {
             
@@ -86,7 +117,7 @@ namespace CarRenting.Data
 
         internal async Task<List<Booking>> GetAllBookingsDependingOnStatus(int status)
         {
-            if (status==1)
+            if (status==2)
             {
                 return await _bookingContext.Bookings.Include(x => x.Car).Include(x => x.Customer).Where(x => x.Car.Available == true).ToListAsync();
             }
